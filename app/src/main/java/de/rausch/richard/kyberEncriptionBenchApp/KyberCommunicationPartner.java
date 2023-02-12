@@ -9,17 +9,18 @@ import org.jetbrains.annotations.NotNull;
 import javax.crypto.KeyGenerator;
 import java.security.*;
 
-public class KyberCommunicationPartner {
+public class KyberCommunicationPartner implements CommunicationPartner{
     private final KeyPair keyPair;
     private byte[] encryptionKey;
 
     public KyberCommunicationPartner() throws NoSuchAlgorithmException {
         // generate key asymmetric Kyber keypair
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("Kyber");
+        // no initialization necessary, as getInstance already provides configuration
         keyPair = keyPairGen.generateKeyPair();
     }
 
-    public void connectTo(KyberCommunicationPartner partner) {
+    public void connectTo(CommunicationPartner partner) {
         try {
             // symmetrischen key generator erstellen und AES-Schlüssel erzeugen
             // für das KEM wird der öffentliche Schlüssel des kommunikationspartners übergeben
