@@ -16,7 +16,7 @@ public class RSACommunicationPartner implements CommunicationPartner{
 
     public RSACommunicationPartner() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-        keyPairGen.initialize(new RSAKeyGenParameterSpec(3072, RSAKeyGenParameterSpec.F4));
+        keyPairGen.initialize(new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4)); //TODO: match key sizes
         keyPair = keyPairGen.generateKeyPair();
     }
 

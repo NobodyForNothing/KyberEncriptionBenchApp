@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             // capture Results
             long endTimestamp = System.nanoTime();
-            String resultText = iterCount + " local Kyber key establishments finished in:\t" + ((endTimestamp-startTimestamp)/1000000000.0) + "s\n";
+            String resultText = iterCount + " local RSA key establishments finished in:\t" + ((endTimestamp-startTimestamp)/1000000000.0) + "s\n";
 
             resultText += "first keygen took a total of: " + (firstKeyGenTime/1000000000.0) + "s\n";
             resultText += "second keygen took a total of: " + (secondKeyGenTime/1000000000.0) + "s\n";
