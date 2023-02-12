@@ -1,9 +1,12 @@
 package de.rausch.richard.kyberEncriptionBenchApp;
 
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
+import org.bouncycastle.crypto.generators.BaseKDFBytesGenerator;
+import org.bouncycastle.crypto.kems.RSAKEMGenerator;
 import org.bouncycastle.jcajce.spec.KTSParameterSpec;
 
 import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.security.spec.RSAKeyGenParameterSpec;
 
@@ -24,19 +27,20 @@ public class RSACommunicationPartner implements CommunicationPartner{
 
     @Override
     public void connectTo(CommunicationPartner partner) {
-        // implementiert nach https://github.com/rodbate/bouncycastle-examples/blob/master/src/main/java/bcfipsin100/base/Rsa.java#L197
         try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES", "BCFIPS");
-            keyGenerator.init(256);
-            SecretKey aesKey = keyGenerator.generateKey();
+            byte[] aeskeyBytes = new byte[16];
+            new SecureRandom().nextBytes(aeskeyBytes);
+            Key aesKey = new SecretKeySpec(aeskeyBytes,"AES");
+            encryptionKey = aesKey.getEncoded();
 
-            Cipher cipher = Cipher.getInstance("RSA-KTS-KEM-KWS", "BCFIPS");
-            cipher.init(Cipher.WRAP_MODE, keyPair.getPublic(), new KTSParameterSpec.Builder(NISTObjectIdentifiers.id_aes256_wrap.getId(), 256).build());
+            // Encrypt the AES key using RSA
+            Cipher rsaCipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
+            rsaCipher.init(Cipher.WRAP_MODE, partner.getPublic());
 
-            byte[] encapsulatedKey = cipher.wrap(aesKey);
+            byte[] encapsulatedKey = rsaCipher.wrap(aesKey);
             partner.unwrapSecretKey(encapsulatedKey);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | NoSuchProviderException |
-                 InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
+                 NoSuchProviderException e) {
             throw new RuntimeException(e);
         }
     }
@@ -44,13 +48,12 @@ public class RSACommunicationPartner implements CommunicationPartner{
     @Override
     public void unwrapSecretKey(byte[] encapsulatedSecretKey) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA-KTS-KEM-KWS", "BCFIPS");
-            cipher.init(Cipher.UNWRAP_MODE, keyPair.getPrivate(), new KTSParameterSpec.Builder(NISTObjectIdentifiers.id_aes256_wrap.getId(), 256).build());
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "BC");
+            cipher.init(Cipher.UNWRAP_MODE, keyPair.getPrivate(), new SecureRandom());
 
             Key key = cipher.unwrap(encapsulatedSecretKey, "AES", Cipher.SECRET_KEY);
             encryptionKey = key.getEncoded();
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | NoSuchProviderException |
-                 InvalidAlgorithmParameterException | InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | NoSuchProviderException e) {
             throw new RuntimeException(e);
         }
     }

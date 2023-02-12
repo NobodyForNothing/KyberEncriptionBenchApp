@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Kyber Encription Bench App</string>
+    <string-array name="encription_modes">
+        <item>KYBER mode</item>
+        <item>RSA mode</item>
+    </string-array>
 </resources>
