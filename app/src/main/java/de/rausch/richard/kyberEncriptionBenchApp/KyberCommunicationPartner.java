@@ -20,6 +20,10 @@ public class KyberCommunicationPartner implements CommunicationPartner{
         keyPair = keyPairGen.generateKeyPair();
     }
 
+    public PublicKey getPublic() {
+        return keyPair.getPublic();
+    }
+
     public void connectTo(CommunicationPartner partner) {
         try {
             // symmetrischen key generator erstellen und AES-Schlüssel erzeugen
@@ -33,7 +37,7 @@ public class KyberCommunicationPartner implements CommunicationPartner{
 
             // der mit Bobs öffentlichem Schlüssel verschlüsselte AES-Schlüssel wird an Bob gesendet
             byte[] encapsulatedKey = secretAESKey.getEncapsulation();
-            partner.decapsulateSecretKey(encapsulatedKey);
+            partner.unwrapSecretKey(encapsulatedKey);
 
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
             e.printStackTrace();
@@ -41,7 +45,7 @@ public class KyberCommunicationPartner implements CommunicationPartner{
         }
     }
 
-    public void decapsulateSecretKey(byte[] encapsulatedKey) {
+    public void unwrapSecretKey(byte[] encapsulatedKey) {
         try {
             // ein schlüsselgenerator wird mit privatem schlüssel und dem erhaltenden Schlüssel initialisiert
             KeyGenerator keyGen = KeyGenerator.getInstance("Kyber");
@@ -54,10 +58,6 @@ public class KyberCommunicationPartner implements CommunicationPartner{
             e.printStackTrace();
             System.exit(0);
         }
-    }
-
-    public PublicKey getPublic() {
-        return keyPair.getPublic();
     }
 
     @NotNull
