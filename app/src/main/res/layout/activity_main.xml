@@ -40,8 +40,9 @@
             android:layout_marginBottom="32dp"/>
     <Spinner
             android:layout_width="409dp"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteX="1dp" android:id="@+id/spinner2"
+            android:layout_height="wrap_content" android:id="@+id/spinner2"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
-            app:layout_constraintVertical_bias="0.666"/>
+            app:layout_constraintVertical_bias="0.666" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

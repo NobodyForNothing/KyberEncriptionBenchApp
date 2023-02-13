@@ -16,7 +16,7 @@ public class RSACommunicationPartner implements CommunicationPartner{
 
     public RSACommunicationPartner() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-        keyPairGen.initialize(new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4)); //TODO: match key sizes
+        keyPairGen.initialize(new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4));
         keyPair = keyPairGen.generateKeyPair();
     }
 
@@ -28,7 +28,7 @@ public class RSACommunicationPartner implements CommunicationPartner{
     @Override
     public void connectTo(CommunicationPartner partner) {
         try {
-            byte[] aeskeyBytes = new byte[16];
+            byte[] aeskeyBytes = new byte[32]; // same size like KYBER default configuration
             new SecureRandom().nextBytes(aeskeyBytes);
             Key aesKey = new SecretKeySpec(aeskeyBytes,"AES");
             encryptionKey = aesKey.getEncoded();

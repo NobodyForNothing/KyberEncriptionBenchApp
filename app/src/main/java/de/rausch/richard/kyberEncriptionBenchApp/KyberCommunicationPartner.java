@@ -8,6 +8,7 @@ import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 
 public class KyberCommunicationPartner implements CommunicationPartner{
@@ -27,11 +28,17 @@ public class KyberCommunicationPartner implements CommunicationPartner{
 
     public void connectTo(CommunicationPartner partner) {
         try {
+            byte[] aeskeyBytes = new byte[16];
+            new SecureRandom().nextBytes(aeskeyBytes);
+            Key aesKey = new SecretKeySpec(aeskeyBytes,"AES");
+            encryptionKey = aesKey.getEncoded();
+
             // symmetrischen key generator erstellen und AES-Schlüssel erzeugen
             // für das KEM wird der öffentliche Schlüssel des kommunikationspartners übergeben
             KeyGenerator keyGen = KeyGenerator.getInstance("Kyber");
             keyGen.init(new KEMGenerateSpec(partner.getPublic(), "AES"), new SecureRandom());
             SecretKeyWithEncapsulation secretAESKey = (SecretKeyWithEncapsulation) keyGen.generateKey();
+
 
             // der generierte AES schlüssel wird gespeichert
             encryptionKey = secretAESKey.getEncoded();
