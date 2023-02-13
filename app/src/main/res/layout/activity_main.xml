@@ -6,43 +6,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <Button
-            android:text="START TEST"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button"
-            android:onClick="doTest" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/textView" app:layout_constraintVertical_bias="0.78"
-            app:layout_constraintHorizontal_bias="0.916"/>
-    <TextView
-            android:layout_width="363dp"
-            android:layout_height="528dp" android:id="@+id/textView"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.684"/>
-    <EditText
-            android:layout_width="125dp"
-            android:layout_height="47dp"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editTextNumber"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.426" app:layout_constraintBottom_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.782"/>
-    <TextView
-            android:text="Establishments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/editTextNumber" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.615"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
-            android:layout_marginBottom="32dp"/>
-    <Spinner
-            android:layout_width="409dp"
-            android:layout_height="wrap_content" android:id="@+id/spinner2"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
-            app:layout_constraintVertical_bias="0.666" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    <AbsoluteLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:id="@+id/absoluteLayout" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+                android:text="START TEST"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/button"
+                android:onClick="doTest" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/textView" app:layout_constraintVertical_bias="0.78"
+                app:layout_constraintHorizontal_bias="0.916" android:layout_y="61dp" android:layout_x="240dp"/>
+        <TextView
+                android:layout_width="363dp"
+                android:layout_height="528dp" android:id="@+id/textView"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.684" android:layout_y="130dp" android:layout_x="2dp"/>
+        <EditText
+                android:layout_width="125dp"
+                android:layout_height="47dp"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editTextNumber"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.426" app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintVertical_bias="0.782" android:layout_y="64dp" android:layout_x="101dp"/>
+        <TextView
+                android:text="Establishments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView2"
+                app:layout_constraintEnd_toStartOf="@+id/editTextNumber" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.615"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
+                android:layout_marginBottom="32dp" android:layout_y="76dp" android:layout_x="3dp"/>
+        <Spinner
+                android:layout_width="365dp"
+                android:layout_height="wrap_content" android:id="@+id/spinner2"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+                app:layout_constraintVertical_bias="0.666" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_y="25dp" android:layout_x="0dp"/>
+    </AbsoluteLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
