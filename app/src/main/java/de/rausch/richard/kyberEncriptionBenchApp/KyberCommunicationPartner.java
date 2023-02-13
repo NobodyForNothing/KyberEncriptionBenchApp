@@ -4,6 +4,7 @@ import de.rausch.richard.Util;
 import org.bouncycastle.jcajce.SecretKeyWithEncapsulation;
 import org.bouncycastle.jcajce.spec.KEMExtractSpec;
 import org.bouncycastle.jcajce.spec.KEMGenerateSpec;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.KeyGenerator;
@@ -13,10 +14,10 @@ public class KyberCommunicationPartner implements CommunicationPartner{
     private final KeyPair keyPair;
     private byte[] encryptionKey;
 
-    public KyberCommunicationPartner() throws NoSuchAlgorithmException {
+    public KyberCommunicationPartner() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         // generate key asymmetric Kyber keypair
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("Kyber");
-        // no initialization necessary, as getInstance already provides configuration
+        keyPairGen.initialize(KyberParameterSpec.kyber1024_aes);
         keyPair = keyPairGen.generateKeyPair();
     }
 
